@@ -10,13 +10,13 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="stylesheet" href="{{STATIC_PATH}}/css/normalize.min.css">
-        <link rel="stylesheet" href="{{STATIC_PATH}}/css/main.css">
-        <link rel="stylesheet" href="{{STATIC_PATH}}/css/pikaday.css">
+        <link rel="stylesheet" href="{{fullpath('static')}}/css/normalize.min.css">
+        <link rel="stylesheet" href="{{fullpath('static')}}/css/main.css">
+        <link rel="stylesheet" href="{{fullpath('static')}}/css/pikaday.css">
 
-        <script src="{{STATIC_PATH}}/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-        <script src="{{STATIC_PATH}}/js/vendor/moment.min.js"></script>
-        <script src="{{STATIC_PATH}}/js/vendor/pikaday.js"></script>
+        <script src="{{fullpath('static')}}/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+        <script src="{{fullpath('static')}}/js/vendor/moment.min.js"></script>
+        <script src="{{fullpath('static')}}/js/vendor/pikaday.js"></script>
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -46,7 +46,7 @@
                         <section>
                             <h3>{{time}}</h3>
                             <div><video width="320" height="240" preload="none" poster="/video/{{recs_subdir}}/{{snap}}" controls>
-                                <source src="/video/{{recs_subdir}}/{{rec}}" type="video/mp4">
+                                <source src="{{fullpath('video')}}/{{recs_subdir}}/{{rec}}" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video></div>
                         </section>
@@ -66,7 +66,7 @@
         </div>
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="{{STATIC_PATH}}/js/vendor/jquery-1.11.0.min.js"><\/script>')</script>
+        <script>window.jQuery || document.write('<script src="{{fullpath('static')}}/js/vendor/jquery-1.11.0.min.js"><\/script>')</script>
         
         <script>
             var field = document.getElementById('datepicker');
@@ -74,7 +74,7 @@
             var picker = new Pikaday({
                 onSelect: function(date) {
                     subdir = picker.toString(date_fmt);
-                    location.href  = '/date/' + subdir;
+                    location.href  = "{{fullpath('/date/')}}" + subdir;
                 },
                 firstDay: 1,
                 defaultDate: moment("{{recs_subdir}}", date_fmt).toDate()

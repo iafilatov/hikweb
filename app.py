@@ -14,19 +14,29 @@ LOG = logging.getLogger(__name__)
 app = Bottle()
 
 
-@app.route('/')
+def fullpath(path):
+    '''Prepends SCRIPT_NAME; to be used mostly in templates'''
+    return '/'.join((cfg.SCRIPT_NAME, path.lstrip('/')))
+
+
+TPL_DEFAULTS = {
+                'fullpath': fullpath,
+                }
+
+
+@app.get('/', name='index')
 def index():
-    redirect('/today', 303)
+    redirect(app.get_url('today'), 303)
 
 
-@app.route('/today')
+@app.get('/today', name='today')
 def today():
     today = date.today()
     return by_date(today.year, today.month, today.day)
 
 
-@app.route('/date/<year:int>/<month:int>/<day:int>')
-@view('by_date', **cfg.TPL_DEFAULTS)
+@app.get('/date/<year:int>/<month:int>/<day:int>', name='by_date')
+@view('by_date', **TPL_DEFAULTS)
 def by_date(year, month, day):
     recs = []
     
@@ -58,18 +68,18 @@ def by_date(year, month, day):
             }
    
 
-@app.route('/video/<path:path>')
+@app.get('/video/<path:path>', name='video')
 def video(path):
     return static_file(path, root=cfg.RECORDS_DIR)
     
 
-@app.route('/static/<path:path>')
+@app.get('/static/<path:path>', name='static')
 def static(path):
     return static_file(path, root=cfg.STATIC_ROOT)
 
 
 @app.error(404)
-@view('404', **cfg.TPL_DEFAULTS)
+@view('404', **TPL_DEFAULTS)
 def error_404(error):
     return None
     

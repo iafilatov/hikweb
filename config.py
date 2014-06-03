@@ -12,9 +12,8 @@ RECORDS_DIR = 'hikstract/out'
 import re
 RECORDS_PAT = re.compile('rec_\d{4}-\d{2}-\d{2}_\d{2}:\d{2}:\d{2}\.mp4')
 
-STATIC_ROOT = './static'
+# If you want to serve the app in a subpath,
+# set SCRIPT_NAME to the subpath value
+SCRIPT_NAME = ''
 
-# Defaults that are passed into each template
-TPL_DEFAULTS = {
-                'STATIC_PATH': '/static',
-                }
+STATIC_ROOT = './static'

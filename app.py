@@ -56,7 +56,7 @@ def by_date(year, month, day):
             'recs': recs,
             'recs_subdir': recs_subdir,
             }
-    
+   
 
 @app.route('/video/<path:path>')
 def video(path):
@@ -72,7 +72,4 @@ def static(path):
 @view('404', **cfg.TPL_DEFAULTS)
 def error_404(error):
     return None
-
-
-app.run(host=cfg.host, port=cfg.port, debug=cfg.app_debug, reloarer=True)
     

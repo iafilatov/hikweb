@@ -26,13 +26,19 @@ TPL_DEFAULTS = {
 
 @app.get('/', name='index')
 def index():
-    redirect(app.get_url('today'), 303)
+    redirect(app.get_url('live'), 303)
 
 
 @app.get('/today', name='today')
 def today():
     today = date.today()
     return by_date(today.year, today.month, today.day)
+
+
+@app.get('/live', name='live')
+@view('live', **TPL_DEFAULTS)
+def today():
+    return {'rtsp_address': cfg.RTSP_ADDRESS}
 
 
 @app.get('/date/<year:int>/<month:int>/<day:int>', name='by_date')
@@ -49,7 +55,7 @@ def by_date(year, month, day):
         for vid in os.listdir(recs_path):
             if cfg.RECORDS_PAT.match(vid) is None:
                 continue
-            snap = 'snap_{}.png'.format(vid[4:23])
+            snap = 'snap_{}.jpg'.format(vid[4:23])
             recs.append((vid, snap))
         recs.sort()
         msg = '{} videos'.format(len(recs))
